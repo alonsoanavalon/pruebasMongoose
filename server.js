@@ -1,10 +1,15 @@
 const express = require('express')
+const morgan = require('morgan')
 
 const app = express();
 const port = 3000;
 
-//AGREGAMOS CODE PARA QUE EL SERVER ENTIENDA JSON Y NO TIRE UNDEFINED
+app.set('view engine', 'ejs')
+app.set('nombreSeteado', 'Alonso')
 
+
+//AGREGAMOS CODE PARA QUE EL SERVER ENTIENDA JSON Y NO TIRE UNDEFINED
+// MIDDLEWARE CREADO
 function logger(req,res,next) {
 
     console.log('Request received ' + "protocolo "  +req.protocol + " host  " + req.host + "ruta usuario  "  + req.originalUrl)
@@ -17,9 +22,15 @@ function logger(req,res,next) {
 }
 
 
+
+/* middlewares */
+
+
 app.use(express.json())
 
 app.use(logger)
+
+app.use(morgan('dev'))
 
 app.all('/user', (req, res, next) => {
 
@@ -28,14 +39,14 @@ app.all('/user', (req, res, next) => {
 
 })
 
+                /* comienzan rutas */
+
+
 
 app.get('/', (req,res) => {
-    res.json({
-        name:"oscar"
-    })
+    const data = [{'nombre':'alonso'}, {'nombre':'melisa'}]
+    res.render('index.ejs', {personas:data})
 })
-
-
 
 app.post('/user/:id/:pass', (req,res) => {
 
@@ -54,11 +65,27 @@ app.delete('/api/:userId/:pass', (req,res) => {
 
 
 
+                /* Terminan rutas */
+
+/* Middleware de staticFiles */
+
+app.use(express.static('public'))
+
+
+
+/* Status 404 */
 
 app.use((req, res, next) => {
     res.status(404).send('Error 404 desde express')
-})
 
+
+
+
+
+/* Puerto escuchando */
+
+})
 app.listen(port , ()=> {
+    console.log(app.get('nombreSeteado'))
     console.log('Puerto escuchando')
 })
