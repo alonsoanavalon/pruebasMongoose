@@ -12,9 +12,9 @@ app.set('nombreSeteado', 'Alonso')
 // MIDDLEWARE CREADO
 function logger(req,res,next) {
 
-    console.log('Request received ' + "protocolo "  +req.protocol + " host  " + req.host + "ruta usuario  "  + req.originalUrl)
+    console.log('Request received ' + "protocolo "  +req.protocol + " host  " + req.hostname + "ruta usuario  "  + req.originalUrl)
 
-    console.log(req.params)
+
 
     console.log('PASAMOS POR EL LOGGER')
 
@@ -86,6 +86,6 @@ app.use((req, res, next) => {
 
 })
 app.listen(port , ()=> {
-    console.log(app.get('nombreSeteado'))
+
     console.log('Puerto escuchando')
 })

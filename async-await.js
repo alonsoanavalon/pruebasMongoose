@@ -7,7 +7,7 @@ async function main () {
     const productKeyboard = new Product ({
 
         name:'keyboard',
-        description:'nice keyboard',
+        description:'nice gamingKeyboard',
         price:10000
     
     })
